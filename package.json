@@ -1,11 +1,14 @@
 {
   "name": "togo-fastapi",
   "version": "0.1.0",
-  "description": "OpenAPI client for togo-fastapi",
-  "author": "OpenAPI-Generator Contributors",
+  "description": "OpenAPI axios client for togo-fastapi",
+  "author": "Alexander Dmitriev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "url": "https://github.com/golostos/togo-fastapi.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "axios",
