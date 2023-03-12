@@ -24,6 +24,190 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export const EmulatorState = {
+    NUMBER_0: 0,
+    NUMBER_1: 1
+} as const;
+
+export type EmulatorState = typeof EmulatorState[keyof typeof EmulatorState];
+
+
+/**
+ * 
+ * @export
+ * @interface EnterSmsCodeErrorModel
+ */
+export interface EnterSmsCodeErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterSmsCodeErrorModel
+     */
+    'error_message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterSmsCodeErrorModel
+     */
+    'emulator_logs': string;
+}
+/**
+ * 
+ * @export
+ * @interface EnterSmsCodeResponseModel
+ */
+export interface EnterSmsCodeResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnterSmsCodeResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterSmsCodeResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {EnterSmsCodeResultModel}
+     * @memberof EnterSmsCodeResponseModel
+     */
+    'result'?: EnterSmsCodeResultModel;
+    /**
+     * 
+     * @type {EnterSmsCodeErrorModel}
+     * @memberof EnterSmsCodeResponseModel
+     */
+    'error'?: EnterSmsCodeErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnterSmsCodeResponseModel
+     */
+    'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface EnterSmsCodeResultModel
+ */
+export interface EnterSmsCodeResultModel {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EnterSmsCodeResultModel
+     */
+    'profiles'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnterSmsCodeResultModel
+     */
+    'is_need_select_profile'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnterSmsCodeResultModel
+     */
+    'is_account_identified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterSmsCodeResultModel
+     */
+    'balance'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GetSessionStateErrorModel
+ */
+export interface GetSessionStateErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetSessionStateErrorModel
+     */
+    'error_message': string;
+}
+/**
+ * 
+ * @export
+ * @interface GetSessionStateResponseModel
+ */
+export interface GetSessionStateResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GetSessionStateResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetSessionStateResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetSessionStateResponseModel
+     */
+    'code'?: number;
+    /**
+     * 
+     * @type {GetSessionStateResultModel}
+     * @memberof GetSessionStateResponseModel
+     */
+    'result'?: GetSessionStateResultModel;
+    /**
+     * 
+     * @type {GetSessionStateErrorModel}
+     * @memberof GetSessionStateResponseModel
+     */
+    'error'?: GetSessionStateErrorModel;
+}
+/**
+ * 
+ * @export
+ * @interface GetSessionStateResultModel
+ */
+export interface GetSessionStateResultModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetSessionStateResultModel
+     */
+    'emulator_name': string;
+    /**
+     * 
+     * @type {EmulatorState}
+     * @memberof GetSessionStateResultModel
+     */
+    'emulator_state': EmulatorState;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetSessionStateResultModel
+     */
+    'last_action_date': string;
+    /**
+     * 
+     * @type {SessionStatus}
+     * @memberof GetSessionStateResultModel
+     */
+    'session_state': SessionStatus;
+}
+
+
+/**
  * 
  * @export
  * @interface HTTPValidationError
@@ -35,6 +219,19 @@ export interface HTTPValidationError {
      * @memberof HTTPValidationError
      */
     'detail'?: Array<ValidationError>;
+}
+/**
+ * 
+ * @export
+ * @interface InputPasswordErrorModel
+ */
+export interface InputPasswordErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof InputPasswordErrorModel
+     */
+    'error_message': string;
 }
 /**
  * 
@@ -58,6 +255,69 @@ export interface InputPasswordRequest {
 /**
  * 
  * @export
+ * @interface InputPasswordResponseModel
+ */
+export interface InputPasswordResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InputPasswordResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof InputPasswordResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {InputPasswordResultModel}
+     * @memberof InputPasswordResponseModel
+     */
+    'result'?: InputPasswordResultModel;
+    /**
+     * 
+     * @type {InputPasswordErrorModel}
+     * @memberof InputPasswordResponseModel
+     */
+    'error'?: InputPasswordErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof InputPasswordResponseModel
+     */
+    'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InputPasswordResultModel
+ */
+export interface InputPasswordResultModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof InputPasswordResultModel
+     */
+    'session_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface InputPhoneNumberErrorModel
+ */
+export interface InputPhoneNumberErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof InputPhoneNumberErrorModel
+     */
+    'error_message': string;
+}
+/**
+ * 
+ * @export
  * @interface InputPhoneNumberRequest
  */
 export interface InputPhoneNumberRequest {
@@ -73,6 +333,37 @@ export interface InputPhoneNumberRequest {
      * @memberof InputPhoneNumberRequest
      */
     'phone_number': string;
+}
+/**
+ * 
+ * @export
+ * @interface InputPhoneNumberResponseModel
+ */
+export interface InputPhoneNumberResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InputPhoneNumberResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof InputPhoneNumberResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {InputPhoneNumberErrorModel}
+     * @memberof InputPhoneNumberResponseModel
+     */
+    'error'?: InputPhoneNumberErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof InputPhoneNumberResponseModel
+     */
+    'code'?: number;
 }
 /**
  * 
@@ -103,6 +394,31 @@ export interface LocationInner {
 /**
  * 
  * @export
+ * @interface PayErrorModel
+ */
+export interface PayErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof PayErrorModel
+     */
+    'error_message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayErrorModel
+     */
+    'emulator_logs': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayErrorModel
+     */
+    'console_out'?: string;
+}
+/**
+ * 
+ * @export
  * @interface PayRequest
  */
 export interface PayRequest {
@@ -118,6 +434,62 @@ export interface PayRequest {
      * @memberof PayRequest
      */
     'pay_link': string;
+}
+/**
+ * 
+ * @export
+ * @interface PayResponseModel
+ */
+export interface PayResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PayResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {PayResultModel}
+     * @memberof PayResponseModel
+     */
+    'result'?: PayResultModel;
+    /**
+     * 
+     * @type {PayErrorModel}
+     * @memberof PayResponseModel
+     */
+    'error'?: PayErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof PayResponseModel
+     */
+    'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PayResultModel
+ */
+export interface PayResultModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof PayResultModel
+     */
+    'balance': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PayResultModel
+     */
+    'emulator_logs': string;
 }
 /**
  * 
@@ -139,22 +511,29 @@ export interface ResponseModel {
     'message'?: string;
     /**
      * 
-     * @type {object}
-     * @memberof ResponseModel
-     */
-    'result'?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof ResponseModel
-     */
-    'error'?: object;
-    /**
-     * 
      * @type {number}
      * @memberof ResponseModel
      */
     'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SelectAccountErrorModel
+ */
+export interface SelectAccountErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectAccountErrorModel
+     */
+    'error_message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectAccountErrorModel
+     */
+    'emulator_logs': string;
 }
 /**
  * 
@@ -184,6 +563,141 @@ export interface SelectAccountRequest {
 /**
  * 
  * @export
+ * @interface SelectAccountResponseModel
+ */
+export interface SelectAccountResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SelectAccountResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectAccountResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {SelectAccountResultModel}
+     * @memberof SelectAccountResponseModel
+     */
+    'result'?: SelectAccountResultModel;
+    /**
+     * 
+     * @type {SelectAccountErrorModel}
+     * @memberof SelectAccountResponseModel
+     */
+    'error'?: SelectAccountErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof SelectAccountResponseModel
+     */
+    'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SelectAccountResultModel
+ */
+export interface SelectAccountResultModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SelectAccountResultModel
+     */
+    'is_account_identified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelectAccountResultModel
+     */
+    'balance'?: string;
+}
+/**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export const SessionStatus = {
+    NUMBER_MINUS_1: -1,
+    NUMBER_1: 1,
+    NUMBER_2: 2,
+    NUMBER_3: 3
+} as const;
+
+export type SessionStatus = typeof SessionStatus[keyof typeof SessionStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface StartSessionErrorModel
+ */
+export interface StartSessionErrorModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof StartSessionErrorModel
+     */
+    'error_message': string;
+}
+/**
+ * 
+ * @export
+ * @interface StartSessionResponseModel
+ */
+export interface StartSessionResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StartSessionResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StartSessionResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {StartSessionResultModel}
+     * @memberof StartSessionResponseModel
+     */
+    'result'?: StartSessionResultModel;
+    /**
+     * 
+     * @type {StartSessionErrorModel}
+     * @memberof StartSessionResponseModel
+     */
+    'error'?: StartSessionErrorModel;
+    /**
+     * 
+     * @type {number}
+     * @memberof StartSessionResponseModel
+     */
+    'code'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface StartSessionResultModel
+ */
+export interface StartSessionResultModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof StartSessionResultModel
+     */
+    'session_id': string;
+}
+/**
+ * 
+ * @export
  * @interface StopSessionRequest
  */
 export interface StopSessionRequest {
@@ -193,6 +707,31 @@ export interface StopSessionRequest {
      * @memberof StopSessionRequest
      */
     'session_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface StopSessionResponseModel
+ */
+export interface StopSessionResponseModel {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StopSessionResponseModel
+     */
+    'success'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StopSessionResponseModel
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StopSessionResponseModel
+     */
+    'code'?: number;
 }
 /**
  * 
@@ -228,14 +767,14 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
-         * @summary Enter Sms Auth
+         * @summary Enter sms auth code
          * @param {InputSmsAuthRequest} inputSmsAuthRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enterSmsAuthPost: async (inputSmsAuthRequest: InputSmsAuthRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        enterSmsAuth: async (inputSmsAuthRequest: InputSmsAuthRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'inputSmsAuthRequest' is not null or undefined
-            assertParamExists('enterSmsAuthPost', 'inputSmsAuthRequest', inputSmsAuthRequest)
+            assertParamExists('enterSmsAuth', 'inputSmsAuthRequest', inputSmsAuthRequest)
             const localVarPath = `/enter_sms_auth`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -264,15 +803,16 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Input Phone Number
-         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @summary Get session state
+         * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inputPasswordPost: async (inputPasswordRequest: InputPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inputPasswordRequest' is not null or undefined
-            assertParamExists('inputPasswordPost', 'inputPasswordRequest', inputPasswordRequest)
-            const localVarPath = `/input_password`;
+        getSessionState: async (sessionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sessionId' is not null or undefined
+            assertParamExists('getSessionState', 'sessionId', sessionId)
+            const localVarPath = `/session_state/{session_id}`
+                .replace(`{${"session_id"}}`, encodeURIComponent(String(sessionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -280,18 +820,15 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inputPasswordRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -300,14 +837,14 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Input Phone Number
+         * @summary Input phone number
          * @param {InputPhoneNumberRequest} inputPhoneNumberRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inputPhoneNumberPost: async (inputPhoneNumberRequest: InputPhoneNumberRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        inputPhoneNumber: async (inputPhoneNumberRequest: InputPhoneNumberRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'inputPhoneNumberRequest' is not null or undefined
-            assertParamExists('inputPhoneNumberPost', 'inputPhoneNumberRequest', inputPhoneNumberRequest)
+            assertParamExists('inputPhoneNumber', 'inputPhoneNumberRequest', inputPhoneNumberRequest)
             const localVarPath = `/input_phone_number`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -336,14 +873,50 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @summary Input wallet password
+         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        inputWalletPassword: async (inputPasswordRequest: InputPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'inputPasswordRequest' is not null or undefined
+            assertParamExists('inputWalletPassword', 'inputPasswordRequest', inputPasswordRequest)
+            const localVarPath = `/input_password`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inputPasswordRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Pay
          * @param {PayRequest} payRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        payPost: async (payRequest: PayRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pay: async (payRequest: PayRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'payRequest' is not null or undefined
-            assertParamExists('payPost', 'payRequest', payRequest)
+            assertParamExists('pay', 'payRequest', payRequest)
             const localVarPath = `/pay`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -372,14 +945,14 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Select Account
+         * @summary Select account
          * @param {SelectAccountRequest} selectAccountRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        selectAccountPost: async (selectAccountRequest: SelectAccountRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        selectAccount: async (selectAccountRequest: SelectAccountRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'selectAccountRequest' is not null or undefined
-            assertParamExists('selectAccountPost', 'selectAccountRequest', selectAccountRequest)
+            assertParamExists('selectAccount', 'selectAccountRequest', selectAccountRequest)
             const localVarPath = `/select_account`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -408,11 +981,11 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Start Session
+         * @summary Start emulator session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startSessionGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        startSession: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/start_session`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -438,14 +1011,14 @@ export const EmulatorInteractionApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Stop Session
+         * @summary Stop emulator session
          * @param {StopSessionRequest} stopSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopSessionPost: async (stopSessionRequest: StopSessionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stopSession: async (stopSessionRequest: StopSessionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stopSessionRequest' is not null or undefined
-            assertParamExists('stopSessionPost', 'stopSessionRequest', stopSessionRequest)
+            assertParamExists('stopSession', 'stopSessionRequest', stopSessionRequest)
             const localVarPath = `/stop_session`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -484,35 +1057,46 @@ export const EmulatorInteractionApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
-         * @summary Enter Sms Auth
+         * @summary Enter sms auth code
          * @param {InputSmsAuthRequest} inputSmsAuthRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async enterSmsAuthPost(inputSmsAuthRequest: InputSmsAuthRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.enterSmsAuthPost(inputSmsAuthRequest, options);
+        async enterSmsAuth(inputSmsAuthRequest: InputSmsAuthRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnterSmsCodeResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.enterSmsAuth(inputSmsAuthRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Input Phone Number
-         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @summary Get session state
+         * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async inputPasswordPost(inputPasswordRequest: InputPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.inputPasswordPost(inputPasswordRequest, options);
+        async getSessionState(sessionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSessionStateResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSessionState(sessionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Input Phone Number
+         * @summary Input phone number
          * @param {InputPhoneNumberRequest} inputPhoneNumberRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async inputPhoneNumberPost(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.inputPhoneNumberPost(inputPhoneNumberRequest, options);
+        async inputPhoneNumber(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InputPhoneNumberResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.inputPhoneNumber(inputPhoneNumberRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Input wallet password
+         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async inputWalletPassword(inputPasswordRequest: InputPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InputPasswordResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.inputWalletPassword(inputPasswordRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -522,40 +1106,40 @@ export const EmulatorInteractionApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async payPost(payRequest: PayRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.payPost(payRequest, options);
+        async pay(payRequest: PayRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pay(payRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Select Account
+         * @summary Select account
          * @param {SelectAccountRequest} selectAccountRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async selectAccountPost(selectAccountRequest: SelectAccountRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.selectAccountPost(selectAccountRequest, options);
+        async selectAccount(selectAccountRequest: SelectAccountRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SelectAccountResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.selectAccount(selectAccountRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Start Session
+         * @summary Start emulator session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startSessionGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.startSessionGet(options);
+        async startSession(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StartSessionResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startSession(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Stop Session
+         * @summary Stop emulator session
          * @param {StopSessionRequest} stopSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopSessionPost(stopSessionRequest: StopSessionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stopSessionPost(stopSessionRequest, options);
+        async stopSession(stopSessionRequest: StopSessionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StopSessionResponseModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopSession(stopSessionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -570,33 +1154,43 @@ export const EmulatorInteractionApiFactory = function (configuration?: Configura
     return {
         /**
          * 
-         * @summary Enter Sms Auth
+         * @summary Enter sms auth code
          * @param {InputSmsAuthRequest} inputSmsAuthRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enterSmsAuthPost(inputSmsAuthRequest: InputSmsAuthRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.enterSmsAuthPost(inputSmsAuthRequest, options).then((request) => request(axios, basePath));
+        enterSmsAuth(inputSmsAuthRequest: InputSmsAuthRequest, options?: any): AxiosPromise<EnterSmsCodeResponseModel> {
+            return localVarFp.enterSmsAuth(inputSmsAuthRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Input Phone Number
-         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @summary Get session state
+         * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inputPasswordPost(inputPasswordRequest: InputPasswordRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.inputPasswordPost(inputPasswordRequest, options).then((request) => request(axios, basePath));
+        getSessionState(sessionId: string, options?: any): AxiosPromise<GetSessionStateResponseModel> {
+            return localVarFp.getSessionState(sessionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Input Phone Number
+         * @summary Input phone number
          * @param {InputPhoneNumberRequest} inputPhoneNumberRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inputPhoneNumberPost(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.inputPhoneNumberPost(inputPhoneNumberRequest, options).then((request) => request(axios, basePath));
+        inputPhoneNumber(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: any): AxiosPromise<InputPhoneNumberResponseModel> {
+            return localVarFp.inputPhoneNumber(inputPhoneNumberRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Input wallet password
+         * @param {InputPasswordRequest} inputPasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        inputWalletPassword(inputPasswordRequest: InputPasswordRequest, options?: any): AxiosPromise<InputPasswordResponseModel> {
+            return localVarFp.inputWalletPassword(inputPasswordRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -605,37 +1199,37 @@ export const EmulatorInteractionApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        payPost(payRequest: PayRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.payPost(payRequest, options).then((request) => request(axios, basePath));
+        pay(payRequest: PayRequest, options?: any): AxiosPromise<PayResponseModel> {
+            return localVarFp.pay(payRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Select Account
+         * @summary Select account
          * @param {SelectAccountRequest} selectAccountRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        selectAccountPost(selectAccountRequest: SelectAccountRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.selectAccountPost(selectAccountRequest, options).then((request) => request(axios, basePath));
+        selectAccount(selectAccountRequest: SelectAccountRequest, options?: any): AxiosPromise<SelectAccountResponseModel> {
+            return localVarFp.selectAccount(selectAccountRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Start Session
+         * @summary Start emulator session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startSessionGet(options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.startSessionGet(options).then((request) => request(axios, basePath));
+        startSession(options?: any): AxiosPromise<StartSessionResponseModel> {
+            return localVarFp.startSession(options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Stop Session
+         * @summary Stop emulator session
          * @param {StopSessionRequest} stopSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopSessionPost(stopSessionRequest: StopSessionRequest, options?: any): AxiosPromise<ResponseModel> {
-            return localVarFp.stopSessionPost(stopSessionRequest, options).then((request) => request(axios, basePath));
+        stopSession(stopSessionRequest: StopSessionRequest, options?: any): AxiosPromise<StopSessionResponseModel> {
+            return localVarFp.stopSession(stopSessionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -649,38 +1243,50 @@ export const EmulatorInteractionApiFactory = function (configuration?: Configura
 export class EmulatorInteractionApi extends BaseAPI {
     /**
      * 
-     * @summary Enter Sms Auth
+     * @summary Enter sms auth code
      * @param {InputSmsAuthRequest} inputSmsAuthRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public enterSmsAuthPost(inputSmsAuthRequest: InputSmsAuthRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).enterSmsAuthPost(inputSmsAuthRequest, options).then((request) => request(this.axios, this.basePath));
+    public enterSmsAuth(inputSmsAuthRequest: InputSmsAuthRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).enterSmsAuth(inputSmsAuthRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Input Phone Number
-     * @param {InputPasswordRequest} inputPasswordRequest 
+     * @summary Get session state
+     * @param {string} sessionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public inputPasswordPost(inputPasswordRequest: InputPasswordRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).inputPasswordPost(inputPasswordRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSessionState(sessionId: string, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).getSessionState(sessionId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Input Phone Number
+     * @summary Input phone number
      * @param {InputPhoneNumberRequest} inputPhoneNumberRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public inputPhoneNumberPost(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).inputPhoneNumberPost(inputPhoneNumberRequest, options).then((request) => request(this.axios, this.basePath));
+    public inputPhoneNumber(inputPhoneNumberRequest: InputPhoneNumberRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).inputPhoneNumber(inputPhoneNumberRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Input wallet password
+     * @param {InputPasswordRequest} inputPasswordRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmulatorInteractionApi
+     */
+    public inputWalletPassword(inputPasswordRequest: InputPasswordRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).inputWalletPassword(inputPasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -691,43 +1297,43 @@ export class EmulatorInteractionApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public payPost(payRequest: PayRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).payPost(payRequest, options).then((request) => request(this.axios, this.basePath));
+    public pay(payRequest: PayRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).pay(payRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Select Account
+     * @summary Select account
      * @param {SelectAccountRequest} selectAccountRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public selectAccountPost(selectAccountRequest: SelectAccountRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).selectAccountPost(selectAccountRequest, options).then((request) => request(this.axios, this.basePath));
+    public selectAccount(selectAccountRequest: SelectAccountRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).selectAccount(selectAccountRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Start Session
+     * @summary Start emulator session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public startSessionGet(options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).startSessionGet(options).then((request) => request(this.axios, this.basePath));
+    public startSession(options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).startSession(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Stop Session
+     * @summary Stop emulator session
      * @param {StopSessionRequest} stopSessionRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulatorInteractionApi
      */
-    public stopSessionPost(stopSessionRequest: StopSessionRequest, options?: AxiosRequestConfig) {
-        return EmulatorInteractionApiFp(this.configuration).stopSessionPost(stopSessionRequest, options).then((request) => request(this.axios, this.basePath));
+    public stopSession(stopSessionRequest: StopSessionRequest, options?: AxiosRequestConfig) {
+        return EmulatorInteractionApiFp(this.configuration).stopSession(stopSessionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

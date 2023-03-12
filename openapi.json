@@ -1,1 +1,893 @@
-{"openapi":"3.0.2","info":{"title":"FastAPI","version":"0.1.0"},"paths":{"/start_session":{"get":{"tags":["Emulator interaction"],"summary":"Start Session","operationId":"start_session_start_session_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}}}}},"/stop_session":{"post":{"tags":["Emulator interaction"],"summary":"Stop Session","operationId":"stop_session_stop_session_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/StopSessionRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/input_phone_number":{"post":{"tags":["Emulator interaction"],"summary":"Input Phone Number","operationId":"input_phone_number_input_phone_number_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/InputPhoneNumberRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/input_password":{"post":{"tags":["Emulator interaction"],"summary":"Input Phone Number","operationId":"input_phone_number_input_password_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/InputPasswordRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/enter_sms_auth":{"post":{"tags":["Emulator interaction"],"summary":"Enter Sms Auth","operationId":"enter_sms_auth_enter_sms_auth_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/InputSmsAuthRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/select_account":{"post":{"tags":["Emulator interaction"],"summary":"Select Account","operationId":"select_account_select_account_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SelectAccountRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/pay":{"post":{"tags":["Emulator interaction"],"summary":"Pay","operationId":"pay_pay_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PayRequest"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseModel"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}}},"components":{"schemas":{"HTTPValidationError":{"title":"HTTPValidationError","type":"object","properties":{"detail":{"title":"Detail","type":"array","items":{"$ref":"#/components/schemas/ValidationError"}}}},"InputPasswordRequest":{"title":"InputPasswordRequest","required":["session_id","password"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"},"password":{"title":"Password","type":"string"}}},"InputPhoneNumberRequest":{"title":"InputPhoneNumberRequest","required":["session_id","phone_number"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"},"phone_number":{"title":"Phone Number","type":"string"}}},"InputSmsAuthRequest":{"title":"InputSmsAuthRequest","required":["session_id","sms_code"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"},"sms_code":{"title":"Sms Code","type":"string"}}},"PayRequest":{"title":"PayRequest","required":["session_id","pay_link"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"},"pay_link":{"title":"Pay Link","type":"string"}}},"ResponseModel":{"title":"ResponseModel","type":"object","properties":{"success":{"title":"Success","type":"boolean","default":false},"message":{"title":"Message","type":"string"},"result":{"title":"Result","type":"object"},"error":{"title":"Error","type":"object"},"code":{"title":"Code","type":"integer"}}},"SelectAccountRequest":{"title":"SelectAccountRequest","required":["session_id","index","password"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"},"index":{"title":"Index","type":"integer"},"password":{"title":"Password","type":"string"}}},"StopSessionRequest":{"title":"StopSessionRequest","required":["session_id"],"type":"object","properties":{"session_id":{"title":"Session Id","type":"string"}}},"ValidationError":{"title":"ValidationError","required":["loc","msg","type"],"type":"object","properties":{"loc":{"title":"Location","type":"array","items":{"anyOf":[{"type":"string"},{"type":"integer"}]}},"msg":{"title":"Message","type":"string"},"type":{"title":"Error Type","type":"string"}}}}}}
+{
+  "openapi": "3.0.2",
+  "info": { "title": "FastAPI", "version": "0.1.0" },
+  "paths": {
+    "/start_session": {
+      "get": {
+        "tags": ["Emulator interaction"],
+        "summary": "Start emulator session",
+        "operationId": "start_session",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartSessionResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stop_session": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Stop emulator session",
+        "operationId": "stop_session",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopSessionResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/session_state/{session_id}": {
+      "get": {
+        "tags": ["Emulator interaction"],
+        "summary": "Get session state",
+        "operationId": "get_session_state",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "name": "session_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSessionStateResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/input_phone_number": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Input phone number",
+        "operationId": "input_phone_number",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputPhoneNumberRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputPhoneNumberResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/input_password": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Input wallet password",
+        "operationId": "input_wallet_password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InputPasswordResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enter_sms_auth": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Enter sms auth code",
+        "operationId": "enter_sms_auth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InputSmsAuthRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnterSmsCodeResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/select_account": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Select account",
+        "operationId": "select_account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SelectAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SelectAccountResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay": {
+      "post": {
+        "tags": ["Emulator interaction"],
+        "summary": "Pay",
+        "operationId": "pay",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayResponseModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EmulatorState": {
+        "title": "EmulatorState",
+        "enum": [0, 1],
+        "description": "An enumeration."
+      },
+      "EnterSmsCodeErrorModel": {
+        "title": "EnterSmsCodeErrorModel",
+        "required": ["error_message", "emulator_logs"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          },
+          "emulator_logs": {
+            "title": "Emulator Logs",
+            "type": "string"
+          }
+        }
+      },
+      "EnterSmsCodeResponseModel": {
+        "title": "EnterSmsCodeResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/EnterSmsCodeResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/EnterSmsCodeErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "EnterSmsCodeResultModel": {
+        "title": "EnterSmsCodeResultModel",
+        "type": "object",
+        "properties": {
+          "profiles": {
+            "title": "Profiles",
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "is_need_select_profile": {
+            "title": "Is Need Select Profile",
+            "type": "boolean",
+            "default": false
+          },
+          "is_account_identified": {
+            "title": "Is Account Identified",
+            "type": "boolean"
+          },
+          "balance": {
+            "title": "Balance",
+            "type": "string"
+          }
+        }
+      },
+      "GetSessionStateErrorModel": {
+        "title": "GetSessionStateErrorModel",
+        "required": ["error_message"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          }
+        }
+      },
+      "GetSessionStateResponseModel": {
+        "title": "GetSessionStateResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "code": { "title": "Code", "type": "integer" },
+          "result": {
+            "$ref": "#/components/schemas/GetSessionStateResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/GetSessionStateErrorModel"
+          }
+        }
+      },
+      "GetSessionStateResultModel": {
+        "title": "GetSessionStateResultModel",
+        "required": [
+          "emulator_name",
+          "emulator_state",
+          "last_action_date",
+          "session_state"
+        ],
+        "type": "object",
+        "properties": {
+          "emulator_name": {
+            "title": "Emulator Name",
+            "type": "string"
+          },
+          "emulator_state": {
+            "$ref": "#/components/schemas/EmulatorState"
+          },
+          "last_action_date": {
+            "title": "Last Action Date",
+            "type": "string",
+            "format": "date-time"
+          },
+          "session_state": {
+            "$ref": "#/components/schemas/SessionStatus"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "InputPasswordErrorModel": {
+        "title": "InputPasswordErrorModel",
+        "required": ["error_message"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          }
+        }
+      },
+      "InputPasswordRequest": {
+        "title": "InputPasswordRequest",
+        "required": ["session_id", "password"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string"
+          }
+        }
+      },
+      "InputPasswordResponseModel": {
+        "title": "InputPasswordResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/InputPasswordResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/InputPasswordErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "InputPasswordResultModel": {
+        "title": "InputPasswordResultModel",
+        "required": ["session_id"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          }
+        }
+      },
+      "InputPhoneNumberErrorModel": {
+        "title": "InputPhoneNumberErrorModel",
+        "required": ["error_message"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          }
+        }
+      },
+      "InputPhoneNumberRequest": {
+        "title": "InputPhoneNumberRequest",
+        "required": ["session_id", "phone_number"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          },
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          }
+        }
+      },
+      "InputPhoneNumberResponseModel": {
+        "title": "InputPhoneNumberResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "error": {
+            "$ref": "#/components/schemas/InputPhoneNumberErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "InputSmsAuthRequest": {
+        "title": "InputSmsAuthRequest",
+        "required": ["session_id", "sms_code"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          },
+          "sms_code": {
+            "title": "Sms Code",
+            "type": "string"
+          }
+        }
+      },
+      "PayErrorModel": {
+        "title": "PayErrorModel",
+        "required": ["error_message", "emulator_logs"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          },
+          "emulator_logs": {
+            "title": "Emulator Logs",
+            "type": "string"
+          },
+          "console_out": {
+            "title": "Console Out",
+            "type": "string"
+          }
+        }
+      },
+      "PayRequest": {
+        "title": "PayRequest",
+        "required": ["session_id", "pay_link"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          },
+          "pay_link": {
+            "title": "Pay Link",
+            "type": "string"
+          }
+        }
+      },
+      "PayResponseModel": {
+        "title": "PayResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/PayResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/PayErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "PayResultModel": {
+        "title": "PayResultModel",
+        "required": ["balance", "emulator_logs"],
+        "type": "object",
+        "properties": {
+          "balance": {
+            "title": "Balance",
+            "type": "string"
+          },
+          "emulator_logs": {
+            "title": "Emulator Logs",
+            "type": "string"
+          }
+        }
+      },
+      "ResponseModel": {
+        "title": "ResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "SelectAccountErrorModel": {
+        "title": "SelectAccountErrorModel",
+        "required": ["error_message", "emulator_logs"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          },
+          "emulator_logs": {
+            "title": "Emulator Logs",
+            "type": "string"
+          }
+        }
+      },
+      "SelectAccountRequest": {
+        "title": "SelectAccountRequest",
+        "required": ["session_id", "index", "password"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          },
+          "index": { "title": "Index", "type": "integer" },
+          "password": {
+            "title": "Password",
+            "type": "string"
+          }
+        }
+      },
+      "SelectAccountResponseModel": {
+        "title": "SelectAccountResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/SelectAccountResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/SelectAccountErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "SelectAccountResultModel": {
+        "title": "SelectAccountResultModel",
+        "type": "object",
+        "properties": {
+          "is_account_identified": {
+            "title": "Is Account Identified",
+            "type": "boolean"
+          },
+          "balance": {
+            "title": "Balance",
+            "type": "string"
+          }
+        }
+      },
+      "SessionStatus": {
+        "title": "SessionStatus",
+        "enum": [-1, 1, 2, 3],
+        "description": "An enumeration."
+      },
+      "StartSessionErrorModel": {
+        "title": "StartSessionErrorModel",
+        "required": ["error_message"],
+        "type": "object",
+        "properties": {
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          }
+        }
+      },
+      "StartSessionResponseModel": {
+        "title": "StartSessionResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/StartSessionResultModel"
+          },
+          "error": {
+            "$ref": "#/components/schemas/StartSessionErrorModel"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "StartSessionResultModel": {
+        "title": "StartSessionResultModel",
+        "required": ["session_id"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          }
+        }
+      },
+      "StopSessionRequest": {
+        "title": "StopSessionRequest",
+        "required": ["session_id"],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "title": "Session Id",
+            "type": "string"
+          }
+        }
+      },
+      "StopSessionResponseModel": {
+        "title": "StopSessionResponseModel",
+        "type": "object",
+        "properties": {
+          "success": {
+            "title": "Success",
+            "type": "boolean",
+            "default": false
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "code": { "title": "Code", "type": "integer" }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": ["loc", "msg", "type"],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                { "type": "string" },
+                { "type": "integer" }
+              ]
+            }
+          },
+          "msg": { "title": "Message", "type": "string" },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
